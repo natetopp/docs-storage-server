@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const signupUser = (req, res) => {
-    const { username, password, isAdmin, uploadedDocuments } = req.body;
+    const { username, password, isAdmin } = req.body;
 
     UserModel
         .findOne({ username })
@@ -36,7 +36,6 @@ const signupUser = (req, res) => {
                     username: username,
                     password: hashedPswrd,
                     isAdmin: isAdmin,
-                    uploadedDocuments: uploadedDocuments,
                 });
 
                 newUser.save()
@@ -65,7 +64,7 @@ const loginUser = (req, res) => {
                         res.status(500).json({ message: 'Error logging in', error: err });
                     }
                     if (result) {
-                        let token = jwt.sign({ username: user.username, isAdmin: user.isAdmin }, 'verySecretValue', { expiresIn: '8h' });
+                        let token = jwt.sign({ username: user.username, isAdmin: user.isAdmin }, '76zn3enz26m76%&^FG*%N&', { expiresIn: '8h' });
                         res.status(200).json({ message: 'Logged in successfully', token: token });
                     } else {
                         res.status(400).json({ message: 'Wrong password' });
